@@ -3,7 +3,7 @@ input[type='range'] {
     border-radius: 5px;
     box-shadow: inset 0 0 5px #432;
     background-color: #799;
-    height: 80px;
+    height: 150px;
     vertical-align: middle;
     width: 48%;
     -webkit-transform: rotate(270deg);

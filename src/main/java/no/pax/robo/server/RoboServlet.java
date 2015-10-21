@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class RoboServlet extends HttpServlet {
     private WebSocketFactory _wsFactory;
-    RoboSocketClient client = new RoboSocketClient();
+    private RoboSocketClient client = new RoboSocketClient();
 
     /**
      * Initialise the servlet by creating the WebSocketFactory.
@@ -33,7 +33,7 @@ public class RoboServlet extends HttpServlet {
             public WebSocket doWebSocketConnect(HttpServletRequest request, String protocol) {
                 // Return new WebSocket for connections
                 if (Util.PROTOCOL_NAME.equals(protocol)) {
-                    return new DrinkITWebSocket();
+                    return new RoboWebSocket();
 
                 }
                 return null;
@@ -64,7 +64,7 @@ public class RoboServlet extends HttpServlet {
      * a connection.
      * </p>
      */
-    private class DrinkITWebSocket implements WebSocket.OnTextMessage {
+    private class RoboWebSocket implements WebSocket.OnTextMessage {
         volatile Connection _connection;
 
         /**
@@ -96,7 +96,7 @@ public class RoboServlet extends HttpServlet {
                 final String motorB = String.valueOf(jsonObject.get("motorB"));
                 final String socketFormat = Util.getSocketFormat(motorA, motorB);
 
-                System.out.println(socketFormat);
+                //System.out.println(socketFormat);
                 client.sendMessage(socketFormat);
             } catch (JSONException e) {
                 System.out.println("Error during parsing: " + e.getMessage());

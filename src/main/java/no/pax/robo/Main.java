@@ -19,14 +19,41 @@ public class Main {
 
     public Main() {
         try {
-            startServer();
+            startDebugServer();
             startEmbeddedServer();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void startServer() {
+    private void startEmbeddedServer() throws Exception {
+        Runnable serverRunnable = () -> {
+            try {
+                server = new RoboServer();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            Scanner scanner = new Scanner(System.in);
+            final String next = scanner.next();
+
+            if (next.equals("x")) {
+                try {
+                    server.stop();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Thread serverThread = new Thread(serverRunnable);
+        serverThread.start();
+    }
+
+    /**
+     * Normally we will use the actual robot. This is for debuging/testing.
+     */
+    public static void startDebugServer() {
         if (!Util.DEBUG_MODE) {
             System.out.println("Not in debug mode");
             return;
@@ -54,32 +81,5 @@ public class Main {
                 }
             }
         }.start();
-    }
-
-    private void startEmbeddedServer() throws Exception {
-        Runnable serverRunnable = new Runnable() {
-
-            public void run() {
-                try {
-                    server = new RoboServer();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                Scanner scanner = new Scanner(System.in);
-                final String next = scanner.next();
-
-                if (next.equals("x")) {
-                    try {
-                        server.stop();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
-
-        Thread serverThread = new Thread(serverRunnable);
-        serverThread.start();
     }
 }
