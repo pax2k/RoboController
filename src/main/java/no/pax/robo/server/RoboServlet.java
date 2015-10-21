@@ -15,7 +15,7 @@ import java.io.IOException;
 
 
 public class RoboServlet extends HttpServlet {
-    private WebSocketFactory _wsFactory;
+    private WebSocketFactory wsFactory;
     private RoboSocketClient client = new RoboSocketClient();
 
     /**
@@ -24,7 +24,7 @@ public class RoboServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         // Create and configure WS factory
-        _wsFactory = new WebSocketFactory(new WebSocketFactory.Acceptor() {
+        wsFactory = new WebSocketFactory(new WebSocketFactory.Acceptor() {
             public boolean checkOrigin(HttpServletRequest request, String origin) {
                 // Allow all origins
                 return true;
@@ -41,8 +41,8 @@ public class RoboServlet extends HttpServlet {
         });
 
         int maxTextMessageSize = 32 * 1024; // default are 16 * 1024, need more space in order to send images.
-        _wsFactory.setMaxTextMessageSize(maxTextMessageSize);
-        _wsFactory.setMaxIdleTime(Util.DEFAULT_IDLE_TIME);
+        wsFactory.setMaxTextMessageSize(maxTextMessageSize);
+        wsFactory.setMaxIdleTime(Util.DEFAULT_IDLE_TIME);
     }
 
     /**
@@ -51,7 +51,7 @@ public class RoboServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // If the WebSocket factory accepts the connection, then return
-        if (_wsFactory.acceptWebSocket(request, response)) {
+        if (wsFactory.acceptWebSocket(request, response)) {
             return;
         }
         // Otherwise send an HTTP error.
@@ -59,26 +59,26 @@ public class RoboServlet extends HttpServlet {
     }
 
     /**
-     * <p>This class implements the {@link OnTextMessage} interface so that
+     * This class implements the {@link OnTextMessage} interface so that
      * it can handle the call backs when websocket messages are received on
      * a connection.
-     * </p>
      */
     private class RoboWebSocket implements WebSocket.OnTextMessage {
-        volatile Connection _connection;
+        volatile Connection connection;
 
         /**
          * Callback for when a WebSocket connection is opened.
-         * <p>Remember the passed {@link Connection} object for later sending and
+         * Remember the passed {@link Connection} object for later sending and
          * add this WebSocket to the members set.
          */
         public void onOpen(Connection connection) {
-            _connection = connection;
+            this.connection = connection;
+            System.out.println("New connection: " + connection.toString());
         }
 
         /**
          * Callback for when a WebSocket connection is closed.
-         * <p>Remove this WebSocket from the members set.
+         * Remove this WebSocket from the members set.
          */
         public void onClose(int closeCode, String message) {
             System.out.println("Connection close, " + closeCode + ". Message: " + message);
@@ -86,7 +86,7 @@ public class RoboServlet extends HttpServlet {
 
         /**
          * Callback for when a WebSocket message is received.
-         * <p>Send the message to all connections in the members set.
+         * Send the message to all connections in the members set.
          */
         public void onMessage(String data) {
             final JSONObject jsonObject = Util.convertToJSon(data);

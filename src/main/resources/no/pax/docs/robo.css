@@ -2,7 +2,7 @@ input[type='range'] {
     -webkit-appearance: none;
     border-radius: 5px;
     box-shadow: inset 0 0 5px #432;
-    background-color: #799;
+    background-color: #D4AF37;
     height: 150px;
     vertical-align: middle;
     width: 48%;
@@ -15,6 +15,6 @@ input[type=range]::-webkit-slider-thumb {
     height: 40px;
     width: 40px;
     border-radius: 50%;
-    background: goldenrod;
+    background: lightsalmon;
     margin-top: -4px;
 }

@@ -7,16 +7,16 @@
     <link rel="stylesheet" type="text/css" href="robo.css"/>
 </head>
 
-<body style="width: 100%;" onload="initStuff();">
+<body style="width: 100%; background-color: aquamarine;" onload="initStuff();">
 <div style="padding-top: 100px;">
-    <input id="motorA" oninput="motorChanged()" onchange="nullIt()" type="range" class="points" min="-100" max="100" style="float: left">
-    <input id="motorB" oninput="motorChanged()" onchange="nullIt()" type="range" class="points" min="-100" max="100" style="float: right">
+    <input id="motorA" oninput="motorChanged()" onchange="nullIt()" type="range" class="points" min="-100" max="100" step="2" style="float: left">
+    <input id="motorB" oninput="motorChanged()" onchange="nullIt()" type="range" class="points" min="-100" max="100" step="2" style="float: right">
 </div>
 
-<div style="clear: both">
+<div style="text-align: center">
     Debug:<span id="debugValues"></span>
 </div>
-<div style="clear: both">
+<div style="text-align: center">
     Connection:<span id="connectionStatus"></span>
 </div>
 </body>

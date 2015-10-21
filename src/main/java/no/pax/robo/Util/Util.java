@@ -34,6 +34,7 @@ public class Util {
     private static String getMotorInfo(String info) {
         String direction = info.startsWith("-") ? "B" : "F";
         String currentSpeed = info.replaceAll("-", "");
+
         return direction + " " + currentSpeed;
     }
 }

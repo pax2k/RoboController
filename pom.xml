@@ -98,8 +98,8 @@
                             <executable>java</executable>
                             <arguments>
                                 <argument>-showversion</argument>
-                                <argument>-Xmx512m</argument>
-                                <argument>-Xms512m</argument>
+                                <argument>-Xmx2048m</argument>
+                                <argument>-Xms256m</argument>
                                 <argument>-Xmn256m</argument>
                                 <argument>-XX:+PrintCommandLineFlags</argument>
                                 <argument>-verbose:gc</argument>
