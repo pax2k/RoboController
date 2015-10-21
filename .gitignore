@@ -5,6 +5,7 @@
 .idea/
 target/
 websocket.iml
+*.iml
 
 #################
 ## Eclipse
